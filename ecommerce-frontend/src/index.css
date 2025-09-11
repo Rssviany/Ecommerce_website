@@ -1,0 +1,39 @@
+@import "tailwindcss";
+.slick-prev {
+  left: 0px !important;
+}
+.slick-next {
+  right: 0px !important;
+}
+.slick-prev::before,
+.slick-next::before {
+  color: black !important;           
+  font-size: 40px !important;
+  background: none !important;
+  vertical-align: center !important;         
+  font-family: 'Arial';        
+  padding: 8px;           
+}
+
+
+.slick-prev,
+.slick-next {
+  z-index: 10;
+  background: none !important; /* This helps remove circle background too */
+  border: none !important;
+  box-shadow: none !important;
+}
+/* index.css */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+/* index.css */
+
+
+body {
+  background-color: #fff; /* keep your site bg */
+}
