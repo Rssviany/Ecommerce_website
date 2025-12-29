@@ -26,6 +26,7 @@ function AppRoutes() {
         if (decode.exp * 1000 < Date.now()) {
           localStorage.removeItem("token");
           localStorage.removeItem("user");
+          localStorage.removeItem("cartItems");
           alert("Session expired, please login again");
           navigate("/login");
         } else {
@@ -33,6 +34,7 @@ function AppRoutes() {
           const logoutTimer = setTimeout(() => {
             localStorage.removeItem("token");
             localStorage.removeItem("user");
+            localStorage.removeItem("cartItems");
             alert("Session expired, please login again");
             navigate("/login");
           }, timeOut);

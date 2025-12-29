@@ -61,6 +61,7 @@ function NavbarMain() {
     if(isLoggedIn) {
           localStorage.removeItem('token');
           localStorage.removeItem('user');
+          localStorage.removeItem('cartItems');
     } 
     navigate('/login');
    }

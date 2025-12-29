@@ -9,34 +9,40 @@ const Login = () => {
     const [phoneNumber, setPhoneNumber] = useState();
     const navigate = useNavigate();
     const onLoginSubmission = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post("http://localhost:3004/api/ecommerce_clone/login", {
-                email, password
-            });
-            const token = response.data.token;
-            const user = response.data.user;
-            localStorage.setItem('token', token);
-            localStorage.setItem('user', JSON.stringify(user));
-            setTimeout(() => {
-                navigate('/');
-            }, 100);
+    e.preventDefault();
+    try {
+      const { data } = await axios.post("http://localhost:3004/api/ecommerce_clone/login", {
+        email,
+        password,
+      });
 
-        } catch (error) {
-            if (error.response) {
-                if (error.response.status === 404) {
-                    alert('User not Found');
-                } else if (error.response.status === 401) {
-                    alert('Incorrect Password');
-                } else {
-                    alert(error.response.data.message || 'Login Failed');
-                }
-            } else {
-                alert('Login Failed. Please try again');
-                console.error('Login error:', error);
-            }
+      const { token, user } = data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
 
-        }
+      const decoded = jwtDecode(token);
+      const timeOut = decoded.exp * 1000 - Date.now();
+
+      setTimeout(() => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        localStorage.removeItem("cartItems");
+        alert("Session expired, please login again");
+        navigate("/login");
+      }, timeOut);
+
+      navigate("/"); 
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 404) alert("User not Found");
+        else if (error.response.status === 401) alert("Incorrect Password");
+        else alert(error.response.data.message || "Login Failed");
+      } else {
+        alert("Login Failed. Please try again");
+        console.error("Login error:", error);
+      }
+    }
+  
     }
     return (
 
@@ -69,16 +75,16 @@ const Login = () => {
                     <div className=' flex  justify-center'>
                         <p className='text-black'>or</p>
                     </div>
-                    
+
                     <div className='px-2 py-2 items-center '>
-                         <button className='bg-yellow-400 text-sm  text-black font-normal w-full p-2 rounded-2xl hover:bg-yellow-300' type='click' onClick={()=>navigate('/register')}>Register</button>
+                        <button className='bg-yellow-400 text-sm  text-black font-normal w-full p-2 rounded-2xl hover:bg-yellow-300' type='click' onClick={() => navigate('/register')}>Register</button>
                     </div>
                     <p className='text-[12px] mt-5'>By creating an account or logging in, you agree to Amazon’s <span ><a className='text-blue-400 border-b-1 cursor-pointer hover:text-gray-700'>Conditions of Use</a></span > and <span ><a className='text-blue-400 border-b-1 hover:text-gray-700 cursor-pointer '>Privacy Policy</a></span>.</p>
                     <hr className='text-gray-400 mt-3 mb-5' />
                     <p className='text-black text-l font-medium'>Buying for work?</p>
                     <Link to='/login' className='text-blue-400 text-sm hover:border-b-1'>Create a free business account</Link>
                 </div>
-               
+
             </div>
         </>
     )
