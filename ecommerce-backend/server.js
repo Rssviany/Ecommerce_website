@@ -10,11 +10,15 @@ dotenv.config()
 
 const app = express();
 app.use(express.json());
-app.use(cors());
-app.use('/api/ecommerce_clone',loginRouter);
-app.use('/api/ecommerce_clone/products',productRouters);
-app.use('/api/ecommerce_clone/orders',orderRouter);
-app.use('/api/ecommerce_clone/address',addressRouter);
+app.use(cors({
+    origin: "https://ecommerce-website-z69m.vercel.app", // your Vercel frontend URL from screenshot
+    credentials: true
+}));
+
+app.use('/api/ecommerce_clone', loginRouter);
+app.use('/api/ecommerce_clone/products', productRouters);
+app.use('/api/ecommerce_clone/orders', orderRouter);
+app.use('/api/ecommerce_clone/address', addressRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello')
