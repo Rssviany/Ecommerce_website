@@ -15,9 +15,9 @@ function Register() {
         if (!email.includes('@')) return alert('Enter a valid email');
         e.preventDefault();
         try {
-            await axios.post('http://localhost:3004/api/ecommerce_clone/register', {
-                userName, email, password, phoneNumber
-            });
+           await axios.post('https://ecommerce-website-1-huv1.onrender.com/api/ecommerce_clone/register', 
+            { userName, email, password, phoneNumber }, 
+            { withCredentials: true });
             navigate('/login');
         } catch (error) {
             if (error.response && error.response.status === 400) {

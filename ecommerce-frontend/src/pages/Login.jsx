@@ -11,9 +11,11 @@ const Login = () => {
     const onLoginSubmission = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("http://localhost:3004/api/ecommerce_clone/login", {
+      const { data } = await axios.post("https://ecommerce-website-1-huv1.onrender.com/api/ecommerce_clone/login", {
         email,
         password,
+      },{
+        withCredentials: true
       });
 
       const { token, user } = data;
@@ -53,7 +55,7 @@ const Login = () => {
                     <span className='text-black text-2xl -translate-y-2'>.in</span>
                 </div>
 
-                <div className='border-gray-400 border-1 px-6 py-4 w-[400px] '>
+                <div className='border-gray-400 border px-6 py-4 w-100 '>
                     <form onSubmit={onLoginSubmission}>
                         <h2 className='text-black font-medium text-2xl' >Sign in or Create Account</h2>
                         <div className='flex flex-col px-2 py-4 space-y-1'>
